@@ -35,7 +35,7 @@ Do not put a secret in either CSV. Startup logs every loaded value.
 
 ## One loader
 
-Every read and every sidecar write goes through `src/metadata_settings.py`. Do not open the CSV with `csv` anywhere else.
+Every read and every sidecar write goes through the `src.metadata_settings` package. Import that package. The sibling modules are parts of the one loader, not a second door. Do not open the CSV with `csv` anywhere else.
 
 ```python
 from pathlib import Path

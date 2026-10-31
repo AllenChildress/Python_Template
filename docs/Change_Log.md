@@ -44,6 +44,13 @@ Newest real UI steps, oldest last. Same image may also appear on the dated **Sho
 
 ## Entries (newest first)
 
+### 2026-10-31 — Split the metadata loader and name the product repos
+
+- **Files:** `src/metadata_settings/`, `tests/unit/test_metadata_settings.py`, `docs/Template_Inheritance.md`, `docs/Metadata.md`, `docs/Coding_Standards.md`, `docs/Libraries.md`, `README.md`, `AGENTS.md`, `Project.md`
+- **Why:** The loader was one file past the ~500-line review flag, and the catch-up steps did not name the private product repos.
+- **What:** The loader is a package. Callers still import `src.metadata_settings` only. CSV read/merge, typed getters, startup logging, and sidecar write/drift each have a module. Catch-up names https://github.com/AllenChildress/Stock_Data and https://github.com/AllenChildress/Option_Chain_Logger. This change does not run that catch-up.
+- **Benefit:** Improve maintainability
+
 ### 2026-10-31 — Python layer: template chain and metadata CSV
 
 - **Files:** `README.md`, `AGENTS.md`, `Project.md`, `docs/Template_Inheritance.md`, `docs/Metadata.md`, `docs/Coding_Standards.md`, `docs/Glossary.md`, `docs/Lessons_Learned.md`, `docs/Libraries.md`, `docs/Database.md`, `docs/ToDo.md`, `metadata/settings.csv`, `src/metadata_settings.py`, `src/runtime_flags.py`, `src/__init__.py`, `tests/unit/test_metadata_settings.py`, `tests/unit/test_runtime_flags.py`, `.gitignore`, `.env.example`

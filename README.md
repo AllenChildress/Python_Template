@@ -91,8 +91,15 @@ Python_Template/
     local/                  # gitignored measured sidecar; the app may write it
   src/
     __init__.py             # package marker; a child with its own init keeps that file
-    metadata_settings.py    # the only metadata CSV loader
     runtime_flags.py        # running_under_tests()
+    metadata_settings/      # the only metadata CSV loader; import the package, not a sibling
+      __init__.py           # public door: MetadataStore and the names callers use
+      csv_table.py          # read the CSVs and merge the sidecar over the defaults
+      getters.py            # typed int, float, str, and bool reads
+      startup_log.py        # one startup line per loaded value
+      sidecar.py            # measured writes and drift
+      store.py              # MetadataStore, the object callers hold
+      rows.py               # columns, paths, and row objects
   docs/
     PROCESS.md              # how work is done
     Template_Inheritance.md # chain, upstream merge, file ownership

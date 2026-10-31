@@ -17,7 +17,9 @@ LLM_Project_Template  →  Python_Template  →  Python projects
 |------|-----|----------------|
 | [LLM_Project_Template](https://github.com/AllenChildress/LLM_Project_Template) | Language-agnostic staff kit: process, agents, docs hygiene, test layout, logging norms | none |
 | [Python_Template](https://github.com/AllenChildress/Python_Template) | Permanent Python layer. The staff kit, plus shared Python behavior (the metadata CSV loader, `running_under_tests`) | `https://github.com/AllenChildress/LLM_Project_Template.git` |
-| Stock_Data, Option_Chain_Logger, and each new Python app | Product code | `https://github.com/AllenChildress/Python_Template.git` |
+| [Stock_Data](https://github.com/AllenChildress/Stock_Data) | Product code | `https://github.com/AllenChildress/Python_Template.git` |
+| [Option_Chain_Logger](https://github.com/AllenChildress/Option_Chain_Logger) | Product code | `https://github.com/AllenChildress/Python_Template.git` |
+| A new Python app | Product code | `https://github.com/AllenChildress/Python_Template.git` |
 
 The split exists so a process fix and a Python-loader fix each have one home. Product repos stay product repos. A kit change is merged down; it is not retyped into each app.
 
@@ -111,7 +113,7 @@ Python projects take this repo’s version.
 
 - `docs/Template_Inheritance.md`
 - `docs/Metadata.md`
-- `src/metadata_settings.py`
+- `src/metadata_settings/` (the loader package). Callers import `src.metadata_settings` only.
 - `src/runtime_flags.py`
 - `tests/unit/test_metadata_settings.py` (see the sample-row note below)
 - `tests/unit/test_runtime_flags.py`
@@ -125,14 +127,14 @@ Data rows in `metadata/settings.csv` are project-owned. This repo ships two exam
 
 Keep the child’s version.
 
-- Product packages and modules other than `src/metadata_settings.py`, `src/runtime_flags.py`, and a marker-only `src/__init__.py`
+- Product packages and modules other than `src/metadata_settings/`, `src/runtime_flags.py`, and a marker-only `src/__init__.py`
 - `docs/skills/Domain/` playbooks the app adds (the empty README stays the kit’s)
 - App schema, SQL, and runbooks
 - `.env` (never committed) and the product keys in `.env.example` below the project-owned marker
 - `docs/ToDo.md` (each repo’s backlog)
 - `metadata/local/`
 
-`src/__init__.py` in this repo is a package marker. A child that already has a package init keeps the child’s file. The two Python-layer modules still import as `src.metadata_settings` and `src.runtime_flags`.
+`src/__init__.py` in this repo is a package marker. A child that already has a package init keeps the child’s file. Callers still import `src.metadata_settings` and `src.runtime_flags`.
 
 `AGENTS.md`: the session rules and the parallel-session rules are parent kit. The opening line that says product repos inherit the file is Python-layer: keep it. The **architecture paragraph** is project-owned (each repo describes itself). The Start-here rows for this file and for [Metadata.md](Metadata.md) are Python-layer: keep them. The checklist sentence that sends non-user tuning to the metadata CSV is Python-layer: keep it. The do-not-commit line for `metadata/local/` is Python-layer: keep it.
 
@@ -140,7 +142,7 @@ Keep the child’s version.
 
 | File | On a conflict |
 |------|----------------|
-| `README.md` | Keep this repo’s opening description (it names the parent). Take parent edits to environment setup and extensions. Keep the layout lines for `metadata/` and `src/metadata_settings.py`. |
+| `README.md` | Keep this repo’s opening description (it names the parent). Take parent edits to environment setup and extensions. Keep the layout lines for `metadata/` and `src/metadata_settings/`. |
 | `Project.md` | Keep the intake answers the child wrote. Keep the **One config story** row that points tuning at the metadata CSV. |
 | `docs/Change_Log.md` | Keep every entry from both sides, newest first. Do not drop a parent kit row or a child product row. |
 | `.gitignore` | Keep kit entries and the `metadata/local/` line. Keep extra app entries below a `# project-owned` marker. |
@@ -157,9 +159,16 @@ Keep the child’s version.
 
 ## One-time catch-up for Stock_Data and Option_Chain_Logger
 
-Those repos were not built from Python_Template. They already have product history. Catch-up is one PR in each repo, not a rewrite.
+Those repos were not built from Python_Template. They already have product history. Catch-up is one PR in each repo, not a rewrite. Doing that catch-up is a later PR in each repo. This change does not open it.
 
-1. In that clone, `git remote add upstream https://github.com/AllenChildress/Python_Template.git`.
+| Repo | URL |
+|------|-----|
+| Stock_Data | https://github.com/AllenChildress/Stock_Data |
+| Option_Chain_Logger | https://github.com/AllenChildress/Option_Chain_Logger |
+
+Both are private. In each clone:
+
+1. `git remote add upstream https://github.com/AllenChildress/Python_Template.git`.
 2. `git fetch upstream`.
 3. Branch from that repo’s current `main`.
 4. `git merge upstream/main --allow-unrelated-histories`.
@@ -167,5 +176,3 @@ Those repos were not built from Python_Template. They already have product histo
 6. Open one PR. Allen approves it.
 
 After that PR merges, later pulls are a normal `git merge upstream/main`.
-
-This document does not name origin URLs for Stock_Data or Option_Chain_Logger. Add `upstream` in the clone you already have.

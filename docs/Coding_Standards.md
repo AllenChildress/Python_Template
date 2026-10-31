@@ -72,7 +72,7 @@ Allen lock **2026-10-31**. Tuning the user does not edit lives in one checked-in
 | Columns | `category`, `variable`, `value`, `updated`, `description` |
 | Who edits the checked-in file | A coding agent, in a pull request. Set `updated` by hand. |
 | Sidecar | `metadata/local/` (gitignored). Same columns. The app may write it. Loaded on top of the checked-in defaults. |
-| Loader | `src/metadata_settings.py` only. No ad hoc CSV read. |
+| Loader | `src.metadata_settings` only. No ad hoc CSV read. |
 | Commits | Nothing auto-commits. The app never writes the checked-in file. |
 
 Full pattern: [Metadata.md](Metadata.md). Chain and file ownership: [Template_Inheritance.md](Template_Inheritance.md).
@@ -384,7 +384,7 @@ When placing or moving code, ask: **if this is deleted, what else must go with i
 
 When the same function is called repeatedly with different parameters, prefer a compact table of calls over copy-pasted logic. Example: scale options, watchlist operations, or batch export steps.
 
-If that table grows past **~5 rows**, or you are about to add the **third** block of the same shape, move the parameters into [`metadata/settings.csv`](../metadata/settings.csv) and read them through [`src/metadata_settings.py`](../src/metadata_settings.py). **Over ~10 rows:** do not keep growing `ScaleOption(...)` / parallel dicts in source. The loader plus the getters are the API. Do not add a second settings file or an ad hoc CSV read. See [Metadata.md](Metadata.md).
+If that table grows past **~5 rows**, or you are about to add the **third** block of the same shape, move the parameters into [`metadata/settings.csv`](../metadata/settings.csv) and read them through [`src.metadata_settings`](../src/metadata_settings/__init__.py). **Over ~10 rows:** do not keep growing `ScaleOption(...)` / parallel dicts in source. The loader plus the getters are the API. Do not add a second settings file or an ad hoc CSV read. See [Metadata.md](Metadata.md).
 
 <!-- python-layer: Python_Template — the paragraph above is the Python-layer metadata rule. Keep it when merging the parent kit. -->
 

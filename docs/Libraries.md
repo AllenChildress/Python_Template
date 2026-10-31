@@ -26,7 +26,7 @@ Pin versions in `requirements.txt` or `pyproject.toml` for the app — recreate 
 
 <!-- python-layer: Python_Template — keep this sentence when merging the parent kit -->
 
-Non-user tuning is [`metadata/settings.csv`](../metadata/settings.csv), read through `src/metadata_settings.py`. Do not add a second settings model for those knobs. See [Metadata.md](Metadata.md).
+Non-user tuning is [`metadata/settings.csv`](../metadata/settings.csv), read through `src.metadata_settings`. Do not add a second settings model for those knobs. See [Metadata.md](Metadata.md).
 
 <!-- /python-layer -->
 

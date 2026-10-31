@@ -448,9 +448,9 @@ def test_outside_a_test_run_the_guard_stays_open(
 ) -> None:
     """monkeypatch: running_under_tests returns false, so a temporary sidecar write proceeds.
 
-    The patched function is the binding metadata_settings calls.
+    The patched function is the binding src.metadata_settings.store calls.
     """
-    monkeypatch.setattr("src.metadata_settings.running_under_tests", lambda: False)
+    monkeypatch.setattr("src.metadata_settings.store.running_under_tests", lambda: False)
     store = _store(tmp_path, APP_ROW)
     store.load()
     store.write_measured("app", "log_retention_days", "21", "measured")
