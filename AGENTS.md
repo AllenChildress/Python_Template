@@ -1,10 +1,12 @@
 # Agent instructions — project template (staff kit)
 
-Portable entry point. **Copy into each app** and replace the architecture paragraph.
+Portable entry point. Product repos inherit this file down the chain and replace the architecture paragraph. See [docs/Template_Inheritance.md](docs/Template_Inheritance.md).
 
 ## Architecture (one paragraph)
 
-**YOUR_APP** is a … (fill: stack, data stores, UI shell). Prefer **named domain/session objects** over parallel `dict` caches for live state. Persistence is … (DB-first / files). Local runtime only: … (gitignore list).
+<!-- project-owned: each repo keeps its own architecture paragraph on an upstream merge -->
+
+**Python_Template** inherits the staff kit from [LLM_Project_Template](https://github.com/AllenChildress/LLM_Project_Template) and is the Python layer in that chain ([docs/Template_Inheritance.md](docs/Template_Inheritance.md)). Child Python projects merge from this repo; product code stays in the child. Shared Python behavior here is the metadata loader (`src/metadata_settings.py`) and `running_under_tests()` (`src/runtime_flags.py`). Non-user tuning lives in checked-in `metadata/settings.csv`. The app may write measured overrides under gitignored `metadata/local/`. `.env` holds secrets and the few values a person really changes. Product persistence (database or files) is the child's choice. Prefer **named domain/session objects** over parallel `dict` caches for live state. Local runtime only: `.env`, `metadata/local/`, `logs/`, virtualenvs, and the capture folders listed in `.gitignore`.
 
 ## Context loading (mandatory)
 
@@ -25,6 +27,8 @@ Portable entry point. **Copy into each app** and replace the architecture paragr
 | Vocabulary | [docs/Glossary.md](docs/Glossary.md) |
 | Kit spine | [Project.md](Project.md) |
 | Setup / install | [README.md](README.md) (Environment setup) |
+| Template chain / upstream merge | [docs/Template_Inheritance.md](docs/Template_Inheritance.md) |
+| Tuning values (metadata CSV) | [docs/Metadata.md](docs/Metadata.md) |
 
 Run `git status` and `git worktree list` before editing. Stage **only** this session’s files. Never `git add -A`.
 
@@ -109,9 +113,9 @@ This session does the work. Nested `AGENTS.md` files are extra reading lists for
 | **Executable for a days-or-weeks run?** | Long-run leak check before the build: leak review, accelerated soak under `running_under_tests()`, hourly DEBUG RSS. [PROCESS.md](docs/PROCESS.md) § Executable production. |
 | Non-obvious fix? | Lessons_Learned |
 | Database / schema change? | Single-threaded: `git worktree list` — this session must be the only topic worktree, then migrate. |
-| **Hardcoded path, URL, file name, host, or port?** | **Stop.** Put it in `.env` / config or derive it. Allen does not authorize one-off literals. [Coding_Standards.md](docs/Coding_Standards.md) **Do not hardcode**. |
+| **Hardcoded path, URL, file name, host, or port?** | **Stop.** Machine paths, URLs, hosts, and ports go in `.env` or are derived. Non-user tuning goes in `metadata/settings.csv` (not `.env`, not a database). Allen does not authorize one-off literals. [Coding_Standards.md](docs/Coding_Standards.md) **Do not hardcode**. |
 | Secrets? | Never commit |
 
 ## Do not commit
 
-`.env`, tokens, dumps, local override configs, large binaries unless intentional.
+`.env`, tokens, dumps, local override configs, `metadata/local/`, large binaries unless intentional.

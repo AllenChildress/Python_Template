@@ -36,6 +36,9 @@ Thumbs.db
 *.local.json
 *.local.yaml
 
+# Measured metadata. The app writes this sidecar. Checked-in defaults stay at metadata/settings.csv.
+metadata/local/
+
 # Runtime screenshot dumps (tracked thumbs live in docs/changelog_shots/)
 data/Graphics/Screenshots/
 # Console / TUI smoke captures (raw text, not Change_Log thumbs)
