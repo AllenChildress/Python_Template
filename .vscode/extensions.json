@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "PawelHuryn.grok-vscode-phuryn",
+    "ms-vscode.PowerShell",
+    "ms-python.python",
+    "ms-python.debugpy",
+    "ms-python.vscode-python-envs",
+    "coddx.coddx-alpha"
+  ]
+}
