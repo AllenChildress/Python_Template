@@ -1,0 +1,3 @@
+category,variable,value,updated,description
+app,log_retention_days,14,2026-10-31,How many days of log files to keep
+ui,status_poll_seconds,5,2026-10-31,How often the status line refreshes

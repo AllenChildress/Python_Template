@@ -52,3 +52,12 @@ _(Move product- or domain-specific lessons here or into the app repo — keep th
 - **The user’s Windows machine is the real exe test (2026-10-28).** A Linux cloud VM cannot produce or run a Windows executable. Say that plainly. Give one paste-ready command that runs the tests, the build, and the launch, and stops on the first failure.
 - **Tray icons are cached and smoothed (2026-10-28).** Windows caches tray and taskbar icons by process (`python.exe`). Qt smooth-scales a small icon. Set an explicit AppUserModelID and paint each icon size exactly.
 - **Long-run leak check.** Before packaging an app that stays up for days or weeks, follow [PROCESS § Executable production](PROCESS.md#executable-production). That section is the gate. Do not restate it here.
+
+## Template chain
+
+<!-- python-layer: Python_Template — keep this section when merging the parent kit -->
+
+- **Use this template has unrelated history (2026-10-31).** GitHub’s “Use this template” copies files and starts a new commit. The child does not share history with the parent. The first `git merge upstream/main` needs `--allow-unrelated-histories`, and conflicts are resolved by hand with [Template_Inheritance.md](Template_Inheritance.md). Later merges are normal. Nothing merges by itself. Stock_Data and Option_Chain_Logger were not built from Python_Template, so their one-time catch-up uses the same flag.
+- **Tests do not write `metadata/local/` in the checkout (2026-10-31).** A sidecar write during pytest dirties the working tree the next session sees. `running_under_tests()` makes the loader refuse that path. Tests pass a temporary directory.
+
+<!-- /python-layer -->

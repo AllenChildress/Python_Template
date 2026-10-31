@@ -44,6 +44,20 @@ Newest real UI steps, oldest last. Same image may also appear on the dated **Sho
 
 ## Entries (newest first)
 
+### 2026-10-31 — Split the metadata loader and name the product repos
+
+- **Files:** `src/metadata_settings/`, `tests/unit/test_metadata_settings.py`, `docs/Template_Inheritance.md`, `docs/Metadata.md`, `docs/Coding_Standards.md`, `docs/Libraries.md`, `README.md`, `AGENTS.md`, `Project.md`
+- **Why:** The loader was one file past the ~500-line review flag, and the catch-up steps did not name the private product repos.
+- **What:** The loader is a package. Callers still import `src.metadata_settings` only. CSV read/merge, typed getters, startup logging, and sidecar write/drift each have a module. Catch-up names https://github.com/AllenChildress/Stock_Data and https://github.com/AllenChildress/Option_Chain_Logger. This change does not run that catch-up.
+- **Benefit:** Improve maintainability
+
+### 2026-10-31 — Python layer: template chain and metadata CSV
+
+- **Files:** `README.md`, `AGENTS.md`, `Project.md`, `docs/Template_Inheritance.md`, `docs/Metadata.md`, `docs/Coding_Standards.md`, `docs/Glossary.md`, `docs/Lessons_Learned.md`, `docs/Libraries.md`, `docs/Database.md`, `docs/ToDo.md`, `metadata/settings.csv`, `src/metadata_settings.py`, `src/runtime_flags.py`, `src/__init__.py`, `tests/unit/test_metadata_settings.py`, `tests/unit/test_runtime_flags.py`, `.gitignore`, `.env.example`
+- **Why:** Python projects need one parent for shared Python behavior, and non-user tuning was going to end up copied into `.env` or a database. Repos created with “Use this template” also do not share history with the parent, so the first downstream merge is easy to get wrong.
+- **What:** This repo is documented as the Python layer under LLM_Project_Template. Children add `upstream`, merge (the first time with `--allow-unrelated-histories`), and open one PR Allen approves. File ownership is listed so merges have a rule. Non-user tuning is one checked-in CSV (`metadata/settings.csv`) plus a gitignored sidecar (`metadata/local/`). One loader logs every value at startup, types the getters, reports a missing or bad value, writes measured sidecar rows, and lists drift past a tolerance.
+- **Benefit:** Improve maintainability
+
 ### 2026-10-30 — Agent runs the suite and reads the saved file
 
 - **Files:** `docs/PROCESS.md`, `AGENTS.md`, `tests/README.md`, `.gitignore`

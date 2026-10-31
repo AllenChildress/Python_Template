@@ -24,6 +24,20 @@ Shared vocabulary for humans and agents. **Add product terms here** as the app g
 | **Done** | Last line of a finished Grok session that was **not** pushed (abort / hold). |
 | **Push Complete** | Last line of a finished Grok session after the short-lived branch was pushed or squash-merged, local and remote branches deleted, and any managed worktree removed. |
 
+## Python layer
+
+Terms for this repo. Keep this section when merging the parent kit. See [Template_Inheritance.md](Template_Inheritance.md) and [Metadata.md](Metadata.md).
+
+| Term | Meaning |
+|------|---------|
+| **Template chain** | LLM_Project_Template (staff kit) → Python_Template (this Python layer) → Python projects such as Stock_Data and Option_Chain_Logger. Changes move down by an upstream merge and a PR Allen approves. Nothing updates automatically. |
+| **Template-owned** | A path the parent owns. On a merge conflict, take that parent’s version. The list is in Template_Inheritance.md. |
+| **Project-owned** | A path the child owns. On a merge conflict, keep the child’s version. |
+| **Unrelated histories** | Use this template (and any repo that was not built from its parent) starts a new commit history. The first `git merge upstream/main` needs `--allow-unrelated-histories`. Later merges are normal. |
+| **Metadata CSV** | Checked-in non-user tuning at `metadata/settings.csv`. Columns: category, variable, value, updated, description. Agents edit it in a PR and set `updated` by hand. |
+| **Metadata sidecar** | Gitignored measured values at `metadata/local/settings.csv`. Same columns. Loaded on top of the checked-in defaults. The app may write it through the metadata loader. Nothing auto-commits. |
+| **running_under_tests** | True when pytest is on the current test, or `RUNNING_UNDER_TESTS=1`. Implemented in `src/runtime_flags.py`. |
+
 ## Libraries (common Python)
 
 | Library | Role |
@@ -35,7 +49,7 @@ Shared vocabulary for humans and agents. **Add product terms here** as the app g
 | **numpy** | Arrays / numeric core under pandas |
 | **PyQt6** | Desktop UI (if desktop app) |
 | **requests** / **httpx** | HTTP clients |
-| **pydantic** | Validated models / settings |
+| **pydantic** | Validated API models. Non-user tuning is the metadata CSV, not a second settings model. |
 
 See [Libraries.md](Libraries.md) for a fuller menu and [Database.md](Database.md) for Postgres vs SQLite vs Timescale.
 

@@ -39,6 +39,12 @@ POSTGRES_PASSWORD=...
 # or DATABASE_URL=postgresql://user:pass@localhost:5432/your_app
 ```
 
+<!-- python-layer: Python_Template — keep this sentence when merging the parent kit -->
+
+Those keys are secrets and the machine values a person changes. Non-user tuning (retention, poll intervals, and the like) belongs in `metadata/settings.csv`, not in this list. See [Metadata.md](Metadata.md).
+
+<!-- /python-layer -->
+
 4. Python: `pip install psycopg[binary]` (or poetry/uv equivalent).
 5. Schema: keep SQL under `db/` or `src/.../sql/` with a version note; apply via script or migration tool.
 6. **Query text:** multi-line SELECT/INSERT/upsert/report SQL also lives in those `.sql` files (load by name). Do not bury full statements as string literals in stores or UI — see Coding_Standards § SQL lives in files.

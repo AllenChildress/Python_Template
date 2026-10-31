@@ -4,9 +4,8 @@ Working backlog. Keep **Done âœ“** as the last section (or use your Kanban toolâ
 
 ## Open
 
-- [ ] Fill [Project.md](Project.md) intake for this app
-- [ ] Replace YOUR_APP / architecture paragraph in [AGENTS.md](../AGENTS.md)
-- [ ] Add first real product feature + Change_Log row
+- [ ] Child app: fill [Project.md](Project.md) intake when a product repo is created from this template
+- [ ] Child app: add the first product feature and a Change_Log row in that repo
 
 ## Later
 
@@ -17,3 +16,6 @@ Working backlog. Keep **Done âœ“** as the last section (or use your Kanban toolâ
 ## Done âœ“
 
 - [x] Staff kit bootstrap from LLM_Project_Template
+- [x] Architecture paragraph in [AGENTS.md](../AGENTS.md) names Python_Template (2026-10-31)
+- [x] Template inheritance doc and metadata CSV loader (2026-10-31)
+- [x] CI / pytest unfold stays dormant in this repo (2026-10-31). Do not add GitHub Actions. A product app unfolds only after the PROCESS purple pick.

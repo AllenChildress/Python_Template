@@ -80,7 +80,7 @@ App-specific docs (schema, runbooks, product ADRs) stay **outside** this kit onc
 3. **ToDo** updated when backlog items complete or cancel.
 4. **Module size:** prefer files under ~500 lines; split by purpose (not arbitrary chops).
 5. **Tests:** every feature or fix ships with a test (bug fix fails first). Adopting an app: unit tests for the core logic, a smoke check that key components work, and a capture script. See [tests/README.md](tests/README.md).
-6. **Secrets:** never commit `.env`, tokens, dumps.
+6. **Secrets:** never commit `.env`, tokens, dumps, or `metadata/local/`.
 7. **Generic vs specific:** kit files stay portable; product truth lives in the app repo.
 
 ---
@@ -95,7 +95,7 @@ Enough structure to stay reliable — not a process theater.
 | **Definition of done** | Behavior works · relevant test · Change_Log/ToDo if user-visible · secrets still out of git. |
 | **Read your own diff** | Before commit: `git status` + diff; agents still need a human sanity check. |
 | **Lock dependencies** | Commit `requirements.txt` or lockfile; recreate envs from the file, not “whatever was on the machine.” |
-| **One config story** | `.env` / env vars for secrets and local paths; document required keys in `.env.example` (no values that matter). |
+| **One config story** | Secrets and the few values a person really changes live in `.env` (document keys in `.env.example`, no values that matter). Non-user tuning lives in one checked-in CSV, `metadata/settings.csv`, with measured overrides in gitignored `metadata/local/`. One loader: `src.metadata_settings`. See [docs/Metadata.md](docs/Metadata.md). |
 | **Backup before destructive DB** | `pg_dump` (or equivalent) before migrations that drop or rewrite data. |
 | **Keep AGENTS architecture current** | One paragraph that matches the real stack beats a stale essay. |
 | **Handoff note** | Short: what changed · how to verify · push status (local until asked). |

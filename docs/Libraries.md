@@ -22,7 +22,13 @@ Pin versions in `requirements.txt` or `pyproject.toml` for the app — recreate 
 | **pytest** | Unit, smoke, integration, regression |
 | **python-dotenv** | Local `.env` without committing secrets |
 | **requests** or **httpx** | HTTP APIs (httpx if async later) |
-| **pydantic** (optional) | Validated config / API models |
+| **pydantic** (optional) | Validated API models |
+
+<!-- python-layer: Python_Template — keep this sentence when merging the parent kit -->
+
+Non-user tuning is [`metadata/settings.csv`](../metadata/settings.csv), read through `src.metadata_settings`. Do not add a second settings model for those knobs. See [Metadata.md](Metadata.md).
+
+<!-- /python-layer -->
 
 ## Desktop UI (if intake = desktop)
 
