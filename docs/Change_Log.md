@@ -44,6 +44,13 @@ Newest real UI steps, oldest last. Same image may also appear on the dated **Sho
 
 ## Entries (newest first)
 
+### 2026-11-20 00:38 CST — Python-specific coding standards
+
+- **Files:** `docs/Coding_Standards.md`
+- **Why:** Parent kit rules stay language-neutral; Python apps still need explicit stdlib/Qt/pytest habits agents repeat in every repo.
+- **What:** Coding_Standards gains **Python-specific practices**: business clock via `zoneinfo` and one helper (no naive `today`/`now`), Qt item lifetime and `sip`/`shiboken` guards, `concurrent.futures` completion only after DB commit, structured `logging` on external 4xx with redaction, and hermetic pytest (fixtures / `monkeypatch` / `tmp_path`).
+- **Benefit:** Improve code hygiene / documentation
+
 ### 2026-10-30 — Agent runs the suite and reads the saved file
 
 - **Files:** `docs/PROCESS.md`, `AGENTS.md`, `tests/README.md`, `.gitignore`

@@ -549,6 +549,40 @@ When a refactor **moves or rewrites code the user waits on** (paint, poll, fetch
 
 Skip this for docs-only, rename-only, or comment-only changes. This does **not** replace dual paint+prefetch fences.
 
+## Python-specific practices
+
+Portable rules for Python apps from this template. Language-neutral wording lives in the parent LLM kit; this section is **stdlib and library mechanics only**.
+
+### Business clock in Python
+
+Do not call `date.today()` or naive `datetime.now()` when choosing a **business date** or formatting a date for an external API. Route those decisions through **one helper** (for example `market_today()`) built on `zoneinfo.ZoneInfo` for the project’s business zone (NYSE-style apps often use `America/New_York`). Keep datetimes **timezone-aware** end to end. Unit tests freeze the clock and include a **late-night** case where the machine’s local calendar date and the business date disagree.
+
+**Why:** Naive “today” follows the PC clock, so API ranges and session labels drift for anyone west of the business zone after local midnight.
+
+### Qt and GUI object lifetime (PyQt / PySide)
+
+After a tree or list **rebuild**, do not keep references to `QTreeWidgetItem`, `QListWidgetItem`, or similar rows across the refresh. Store a **stable key** in an item `Qt.ItemDataRole` and look the row up again after repopulating. If a held reference is unavoidable, call `sip.isdeleted()` (PyQt) or `shiboken6.isValid()` (PySide) before touching the object.
+
+**Why:** Stale item handles raise `RuntimeError: wrapped C/C++ object of type … has been deleted` during paint or click handling.
+
+### Background jobs (`concurrent.futures`)
+
+Treat a future that was **cancelled**, raised in `.result()`, or hit **`CancelledError`** / **`TimeoutError`** as work **not finished**. Mark a job complete only after the **database commit** for its side effects succeeds. Re-queue or reschedule anything that did not reach that commit.
+
+**Why:** UI and ledger state stay consistent when threads time out or the user cancels while Postgres or the broker is still in flight.
+
+### Logging rejected HTTP requests (4xx)
+
+On an HTTP **4xx** from an external API, log with the standard **`logging`** module: HTTP method, endpoint path, and request parameters with **tokens and secrets redacted**, plus the **response body** (also redacted). Use the shared error mapper for user-visible text; this rule is the structured diagnostic line.
+
+**Why:** Support can see whether the failure was bad params, consent, or token scope without reproducing the call or leaking credentials.
+
+### Hermetic pytest
+
+Tests do not read **`.env` secrets**, attach to **live databases**, tail **production logs**, or call **external HTTP/API** services. Supply config with fixtures, override env and imports with `monkeypatch`, and write files under `tmp_path`. Smoke and integration tiers that need real services belong in named fixtures with explicit skips when dependencies are absent—not in unit tests.
+
+**Why:** The suite stays fast, deterministic, and safe to run on any machine without side effects on real data.
+
 ## What to leave alone
 
 - Focused single-purpose modules that are already short.
